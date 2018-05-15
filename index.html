@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet"> 
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div id="top">
+                <image id="rock" src="src/rock3.svg" alt="Rock"></image>
+            </div>
+            <div id="middle">
+                <div id="score">
+                    <div id='score-wrap'>
+                        <p id="your-score"></p>
+                        <p> : </p>
+                        <p id="computer-score"></p>
+                    </div>
+                    <span id='tie'>It's a tie!</span>
+                </div>
+            </div>
+            <div id="bottom">
+                <image id="paper" src="src/paper3.svg" alt="Paper"></image>
+                <image id="scissors" src="src/scissors3.svg" alt="Scissors"></image>
+            </div>
+        </div>
+        <div class="choices">
+            <div id="your-choice">You chose:
+                <span id="you-selected"></span>
+            </div>
+            <div id="computer-choice">Computer chose:
+                <span id="comp-selected"></span>
+            </div>
+        </div>
+        <div class="winner">
+            <p id="result"></p>
+            <button id="again">Play again</button>
+        </div>
+    </div>
+</body>
+<script>
+    function computerPlay() {
+        //creates random number in a range from 0 to max
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max)
+        }
+        const randomInt = getRandomInt(9)
+        if(randomInt >= 0 && randomInt <= 2) {
+            return 'rock'
+        }
+        else if(randomInt >= 3 && randomInt <= 5) {
+            return 'paper'
+        }
+        else return 'scissors'
+    }
+    
+    const game = {
+        you: 0,
+        computer: 0
+    }
+    const yourScore = document.querySelector('#your-score')
+    const computerScore = document.querySelector('#computer-score')
+    const container = document.querySelector('.container')
+    const playAgain = document.querySelector('button[id="again"]')
+    const winner = document.querySelector('.winner')
+    const winnerMessage = document.querySelector('#result')
+    const choices = document.querySelector('.choices')    
+    
+    function playRound(e) {
+        const playerChoice = e.target.id
+        const computerChoice = computerPlay()
+        const tieMessage = document.querySelector("span[id='tie']")
+        const youSelected = document.querySelector('#you-selected')
+        const compSelected = document.querySelector('#comp-selected')
+        tieMessage.style.opacity = 1
+        tieMessage.style.visibility = 'hidden'
+        
+        if(playerChoice == 'rock') {
+            if(computerChoice == 'rock') {
+                tieMessage.style.visibility = 'visible'
+                tieMessage.style.opacity = 0.7
+            }
+            else if(computerChoice == 'paper') {
+                game.computer ++
+            }
+            else if(computerChoice == 'scissors') {
+                game.you++
+            }
+        }
+        if(playerChoice == 'paper'){
+            if(computerChoice == 'rock') {
+                game.you++
+            }
+            else if(computerChoice == 'paper') {
+                tieMessage.style.visibility = 'visible'
+                tieMessage.style.opacity = 0.7
+            } 
+            else if(computerChoice == 'scissors') {
+                game.computer++
+            }
+        }
+        if(playerChoice == 'scissors') {
+            if(computerChoice == 'rock') {
+                game.computer++
+            }
+            else if(computerChoice == 'paper') {
+                game.you++
+            }
+            else if(computerChoice == 'scissors') {
+                tieMessage.style.visibility = 'visible'
+                tieMessage.style.opacity = 0.7
+            }
+        }
+        yourScore.textContent = game.you
+        computerScore.textContent = game.computer
+        youSelected.textContent = playerChoice
+        compSelected.textContent = computerChoice
+        
+        choices.style.visibility = 'visible'
+        if(game.you >= 5 || game.computer >= 5) {
+            finish()
+        }
+    }
+    
+    function finish() {
+        container.style.visibility = 'hidden'
+        choices.style.visibility = 'hidden'
+        winner.style.visibility = 'visible'
+
+        if (game.you == 5) {
+            winnerMessage.textContent = `You won ${game.you} to ${game.computer}!`
+        } else {
+            winnerMessage.textContent = `You lost ${game.you} to ${game.computer}!`
+        }
+        
+    }
+    function refresh(e) {
+        game.you = 0
+        game.computer = 0
+        yourScore.textContent = game.you
+        computerScore.textContent = game.computer
+        winnerMessage.textContent = ''
+        winner.style.visibility = 'hidden'
+        container.style.visibility = 'visible'
+    }
+    
+    const rock = document.querySelector('#rock')
+    const paper = document.querySelector('#paper')
+    const scissors = document.querySelector('#scissors')
+    
+    rock.addEventListener('click', playRound)
+    paper.addEventListener('click', playRound)
+    scissors.addEventListener('click', playRound)
+    playAgain.addEventListener('click', refresh)
+    
+    
+    window.onload = function() {
+        yourScore.textContent = game.you
+        computerScore.textContent = game.computer
+    }
+</script>
+</html>

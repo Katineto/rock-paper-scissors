@@ -1,0 +1,85 @@
+
+body{
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+}
+.main{
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.container {
+    width: 60%;
+    margin: 2em;
+}
+#top, #middle, #bottom {
+    display: flex;
+    height: 12em;
+}
+#top, #middle {
+    display: flex;
+    justify-content: center;
+}
+#middle{ 
+    align-items: center;
+    margin-top: 1em;
+    height: 5em;
+}
+#bottom {
+    display: flex;
+    justify-content: space-between;
+}
+#score{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#score-wrap{
+    display: flex;
+    align-items: center;
+}
+span#tie{
+    visibility: hidden;
+    transition: opacity 0.9s ease-in-out;
+}
+#rock, #paper, #scissors {
+    border-radius: 50%;
+    width: 12em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+img {
+    height: 12em;
+    width: 12em;
+    transition: transform 0.5s ease;
+}
+img:hover{
+    transform: scale(1.1)
+}
+.choices{
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    visibility: hidden;
+}
+.winner{
+    visibility: hidden;
+    position: absolute;
+    top: 200px;
+    display: flex;
+    flex-direction: column;
+}
+button#again{
+    background-color: #f4d4dc;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 0.4em;
+    font-family: inherit;
+    cursor: pointer;
+}
+button#again:hover{
+    background-color: #d2e6f0;
+}
